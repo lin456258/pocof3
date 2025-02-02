@@ -81,6 +81,19 @@ jobs:
 
 
 
+    
+    - name: Clone kernel source
+      run: |
+        git clone --depth=1 ${{ github.event.inputs.KERNEL_TREE }} -b ${{ github.event.inputs.KERNEL_TREE_BRANCH }} kernel_tree
+        echo "kernel-folder=$(pwd)/kernel_tree" >> $GITHUB_OUTPUT
+      working-directory: ${{ steps.workspace.outputs.workspace-folder }}
+      id: kernel
+
+
+
+
+
+
     - name: Run sed and perl Commands
       run: |
           echo "Changing to configuration directory: $CONFIG..."
@@ -98,12 +111,10 @@ jobs:
           perl -pi -e 's{UTS_VERSION="\$\(echo \$UTS_VERSION \$CONFIG_FLAGS \$TIMESTAMP \| cut -b -\$UTS_LEN\)"}{UTS_VERSION="#1 SMP PREEMPT Sat Apr 20 04:20:00 UTC 2024"}' ./scripts/mkcompile_h
 
 
-    - name: Clone kernel source
-      run: |
-        git clone --depth=1 ${{ github.event.inputs.KERNEL_TREE }} -b ${{ github.event.inputs.KERNEL_TREE_BRANCH }} kernel_tree
-        echo "kernel-folder=$(pwd)/kernel_tree" >> $GITHUB_OUTPUT
-      working-directory: ${{ steps.workspace.outputs.workspace-folder }}
-      id: kernel
+
+
+
+      
 
     - name: Building kernel
       run: |
