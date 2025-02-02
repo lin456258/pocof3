@@ -90,7 +90,7 @@ jobs:
           
           # Run sed commands for modifications
 
-          sed -i 's/check_defconfig//' ./build.config.gki
+          #sed -i 's/check_defconfig//' ./build.config.gki
           sed -i '$s|echo "\$res"|echo "-2060傻妞-六百六十六-酷安@我叫鳞"|' ./scripts/setlocalversion
          
 
