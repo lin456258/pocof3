@@ -97,6 +97,35 @@ jobs:
       working-directory: ${{ steps.kernel.outputs.kernel-folder }}
       id: build
 
+
+
+
+
+
+    - name: Run sed and perl Commands
+      run: |
+          echo "Changing to configuration directory: $CONFIG..."
+          
+          cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+          echo "Running sed commands..."
+          
+          # Run sed commands for modifications
+
+          sed -i 's/check_defconfig//' ./build.config.gki
+          sed -i '$s|echo "\$res"|echo "-2060傻妞-六百六十六-酷安@我叫鳞"|' ./scripts/setlocalversion
+         
+
+          # Run perl command to modify UTS_VERSION
+          perl -pi -e 's{UTS_VERSION="\$\(echo \$UTS_VERSION \$CONFIG_FLAGS \$TIMESTAMP \| cut -b -\$UTS_LEN\)"}{UTS_VERSION="#1 SMP PREEMPT Sat Apr 20 04:20:00 UTC 2024"}' ./scripts/mkcompile_h
+
+
+
+
+
+
+
+      
+
     - name: AnyKernel3
       if: ${{ success() && github.event.inputs.ANYKERNEL_URL != '' }}
       run: |
