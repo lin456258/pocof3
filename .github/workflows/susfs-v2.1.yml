@@ -89,19 +89,11 @@ jobs:
       working-directory: ${{ steps.workspace.outputs.workspace-folder }}
       id: kernel
 
-
-
-
-
-
-    
-
-
-      
-
     - name: Building kernel
       run: |
-        bash ksu.sh
+        #bash ksu.sh
+        rm -rf KernelSU-Next
+        curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
         export ARCH=arm64
         export SUBARCH=ARM64
         export KBUILD_BUILD_USER="aliza"
